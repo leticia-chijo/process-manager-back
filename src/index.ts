@@ -3,6 +3,7 @@ import "express-async-errors"
 import dotenv from "dotenv"
 import areasRouter from "@/routers/areas.router"
 import errorHandlerMiddleware from "./middlewares/error.validation"
+import toolsRouter from "./routers/tools.router"
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.get("/health", (_req: Request, res: Response): void => {
 })
 
 app.use(areasRouter)
+app.use(toolsRouter)
 app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 5000
