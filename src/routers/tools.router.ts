@@ -1,4 +1,3 @@
-
 import { deleteToolById, getToolById, getTools, postTool, putToolById } from "@/controllers/tools.controllers"
 import { validateSchema } from "@/middlewares/schema.validation"
 import { toolSchema } from "@/schemas/tools.schemas"
