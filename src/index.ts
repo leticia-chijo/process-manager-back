@@ -5,6 +5,7 @@ import errorHandlerMiddleware from "@/middlewares/error.validation"
 import areasRouter from "@/routers/areas.router"
 import docsRouter from "@/routers/docs.router"
 import toolsRouter from "@/routers/tools.router"
+import teamsRouter from "@/routers/teams.router"
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.get("/health", (_req: Request, res: Response): void => {
 
 app.use(areasRouter)
 app.use(docsRouter)
+app.use(teamsRouter)
 app.use(toolsRouter)
 app.use(errorHandlerMiddleware)
 
