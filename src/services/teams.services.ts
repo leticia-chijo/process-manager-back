@@ -8,9 +8,11 @@ async function verifyIdExists(id: number) {
   if (!idExists) throw notFoundError("Esse time não existe!")
 }
 
-async function verifyConflict(team: TeamBody) {
+async function verifyConflict(team: TeamBody, id: number = -1) {
   const nameExists = await teamsRepository.findByName(team)
-  if (nameExists) throw conflictError("Já existe um time com esse nome!")
+  if (nameExists && (id !== nameExists.id || id === -1)) {
+    throw conflictError("Já existe um time com esse nome!")
+  }
 }
 
 async function verifyAreaExists(id: number) {
@@ -36,7 +38,8 @@ async function readById(id: number) {
 async function updateById(id: number, team: TeamBody) {
   await verifyIdExists(id)
   await verifyAreaExists(team.areaId)
-  await verifyConflict(team)
+  await verifyConflict(team, id)
+
   return await teamsRepository.updateById(id, team)
 }
 

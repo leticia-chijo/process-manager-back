@@ -7,9 +7,11 @@ async function verifyIdExists(id: number) {
   if (!idExists) throw notFoundError("Esse documento não existe!")
 }
 
-async function verifyConflict(doc: DocBody) {
+async function verifyConflict(doc: DocBody, id: number = -1) {
   const nameExists = await docsRepository.findByName(doc)
-  if (nameExists) throw conflictError("Já existe um documento com esse nome!")
+  if (nameExists && (id !== nameExists.id || id === -1)) {
+    throw conflictError("Já existe um documento com esse nome!")
+  }
 }
 
 async function create(doc: DocBody) {
@@ -28,7 +30,8 @@ async function readById(id: number) {
 
 async function updateById(id: number, doc: DocBody) {
   await verifyIdExists(id)
-  await verifyConflict(doc)
+  await verifyConflict(doc, id)
+  
   return await docsRepository.updateById(id, doc)
 }
 

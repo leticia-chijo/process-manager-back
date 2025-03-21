@@ -7,9 +7,11 @@ async function verifyIdExists(id: number) {
   if (!idExists) throw notFoundError("Essa área não existe!")
 }
 
-async function verifyConflict(area: AreaBody) {
+async function verifyConflict(area: AreaBody, id: number = -1) {
   const nameExists = await areasRepository.findByName(area)
-  if (nameExists) throw conflictError("Já existe uma área com esse nome!")
+  if (nameExists && (id !== nameExists.id || id === -1)) {
+    throw conflictError("Já existe uma área com esse nome!")
+  }
 }
 
 async function create(area: AreaBody) {
@@ -28,7 +30,8 @@ async function readById(id: number) {
 
 async function updateById(id: number, area: AreaBody) {
   await verifyIdExists(id)
-  await verifyConflict(area)
+  await verifyConflict(area, id)
+
   return await areasRepository.updateById(id, area)
 }
 

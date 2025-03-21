@@ -7,9 +7,11 @@ async function verifyIdExists(id: number) {
   if (!idExists) throw notFoundError("Essa ferramenta não existe!")
 }
 
-async function verifyConflict(tool: ToolBody) {
+async function verifyConflict(tool: ToolBody, id: number = -1) {
   const nameExists = await toolsRepository.findByName(tool)
-  if (nameExists) throw conflictError("Já existe uma ferramenta com esse nome!")
+  if (nameExists && (id !== nameExists.id || id === -1)) {
+    throw conflictError("Já existe uma ferramenta com esse nome!")
+  }
 }
 
 async function create(tool: ToolBody) {
@@ -28,7 +30,8 @@ async function readById(id: number) {
 
 async function updateById(id: number, tool: ToolBody) {
   await verifyIdExists(id)
-  await verifyConflict(tool)
+  await verifyConflict(tool, id)
+  
   return await toolsRepository.updateById(id, tool)
 }
 
