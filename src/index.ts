@@ -1,9 +1,10 @@
 import express, { Express, Request, Response, json } from "express"
 import "express-async-errors"
 import dotenv from "dotenv"
+import errorHandlerMiddleware from "@/middlewares/error.validation"
 import areasRouter from "@/routers/areas.router"
-import errorHandlerMiddleware from "./middlewares/error.validation"
-import toolsRouter from "./routers/tools.router"
+import docsRouter from "@/routers/docs.router"
+import toolsRouter from "@/routers/tools.router"
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.get("/health", (_req: Request, res: Response): void => {
 })
 
 app.use(areasRouter)
+app.use(docsRouter)
 app.use(toolsRouter)
 app.use(errorHandlerMiddleware)
 
