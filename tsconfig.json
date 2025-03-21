@@ -4,12 +4,12 @@
     "esModuleInterop": true,
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"]
     }
   },
   "ts-node": {
-    "esm": true
+    "require": ["tsconfig-paths/register"]
   }
 }
