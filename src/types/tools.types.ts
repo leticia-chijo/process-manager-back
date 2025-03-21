@@ -1,3 +1,3 @@
 import { Tool } from "@prisma/client"
 
-export type CreateTool = Omit<Tool, "id">
+export type ToolBody = Omit<Tool, "id">

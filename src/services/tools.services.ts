@@ -1,18 +1,18 @@
 import { conflictError, notFoundError } from "@/errors/errors"
 import { toolsRepository } from "@/repositories/tools.repository"
-import { CreateTool } from "@/types/tools.types"
+import { ToolBody } from "@/types/tools.types"
 
 async function verifyIdExists(id: number) {
   const idExists = await toolsRepository.findById(id)
   if (!idExists) throw notFoundError("Essa ferramenta não existe!")
 }
 
-async function verifyConflict(tool: CreateTool) {
+async function verifyConflict(tool: ToolBody) {
   const nameExists = await toolsRepository.findByName(tool)
   if (nameExists) throw conflictError("Já existe uma ferramenta com esse nome!")
 }
 
-async function create(tool: CreateTool) {
+async function create(tool: ToolBody) {
   await verifyConflict(tool)
   return await toolsRepository.create(tool)
 }
@@ -26,7 +26,7 @@ async function readById(id: number) {
   return await toolsRepository.readById(id)
 }
 
-async function updateById(id: number, tool: CreateTool) {
+async function updateById(id: number, tool: ToolBody) {
   await verifyIdExists(id)
   await verifyConflict(tool)
   return await toolsRepository.updateById(id, tool)

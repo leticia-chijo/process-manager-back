@@ -1,18 +1,18 @@
 import { conflictError, notFoundError } from "@/errors/errors"
 import { docsRepository } from "@/repositories/docs.repository"
-import { CreateDoc } from "@/types/docs.types"
+import { DocBody } from "@/types/docs.types"
 
 async function verifyIdExists(id: number) {
   const idExists = await docsRepository.findById(id)
   if (!idExists) throw notFoundError("Esse documento não existe!")
 }
 
-async function verifyConflict(doc: CreateDoc) {
+async function verifyConflict(doc: DocBody) {
   const nameExists = await docsRepository.findByName(doc)
   if (nameExists) throw conflictError("Já existe um documento com esse nome!")
 }
 
-async function create(doc: CreateDoc) {
+async function create(doc: DocBody) {
   await verifyConflict(doc)
   return await docsRepository.create(doc)
 }
@@ -26,7 +26,7 @@ async function readById(id: number) {
   return await docsRepository.readById(id)
 }
 
-async function updateById(id: number, doc: CreateDoc) {
+async function updateById(id: number, doc: DocBody) {
   await verifyIdExists(id)
   await verifyConflict(doc)
   return await docsRepository.updateById(id, doc)

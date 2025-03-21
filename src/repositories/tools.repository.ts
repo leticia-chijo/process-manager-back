@@ -1,7 +1,7 @@
 import prisma from "@/database/database"
-import { CreateTool } from "@/types/tools.types"
+import { ToolBody } from "@/types/tools.types"
 
-async function create(tool: CreateTool) {
+async function create(tool: ToolBody) {
   return prisma.tool.create({
     data: { ...tool }
   })
@@ -17,7 +17,7 @@ async function readById(id: number) {
   })
 }
 
-async function updateById(id: number, tool: CreateTool) {
+async function updateById(id: number, tool: ToolBody) {
   return prisma.tool.update({
     where: { id },
     data: { ...tool }
@@ -30,7 +30,7 @@ async function deleteById(id: number) {
   })
 }
 
-async function findByName(tool: CreateTool) {
+async function findByName(tool: ToolBody) {
   return prisma.tool.findFirst({
     where: { name: tool.name }
   })

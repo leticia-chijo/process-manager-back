@@ -1,7 +1,7 @@
-import { CreateTool } from "@/types/tools.types"
+import { ToolBody } from "@/types/tools.types"
 import Joi from "joi"
 
-export const toolSchema = Joi.object<CreateTool>({
+export const toolSchema = Joi.object<ToolBody>({
   name: Joi.string().min(3).max(50).required().messages({
     "string.base": "O nome deve ser um texto.",
     "string.empty": "O nome não pode estar vazio.",

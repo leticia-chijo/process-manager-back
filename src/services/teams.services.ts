@@ -1,14 +1,14 @@
 import { conflictError, notFoundError } from "@/errors/errors"
 import { areasRepository } from "@/repositories/areas.repository"
 import { teamsRepository } from "@/repositories/teams.repository"
-import { CreateTeam } from "@/types/teams.types"
+import { TeamBody } from "@/types/teams.types"
 
 async function verifyIdExists(id: number) {
   const idExists = await teamsRepository.findById(id)
   if (!idExists) throw notFoundError("Esse time não existe!")
 }
 
-async function verifyConflict(team: CreateTeam) {
+async function verifyConflict(team: TeamBody) {
   const nameExists = await teamsRepository.findByName(team)
   if (nameExists) throw conflictError("Já existe um time com esse nome!")
 }
@@ -18,7 +18,7 @@ async function verifyAreaExists(id: number) {
   if (!idExists) throw notFoundError("Essa área não existe!")
 }
 
-async function create(team: CreateTeam) {
+async function create(team: TeamBody) {
   await verifyAreaExists(team.areaId)
   await verifyConflict(team)
   return await teamsRepository.create(team)
@@ -33,7 +33,7 @@ async function readById(id: number) {
   return await teamsRepository.readById(id)
 }
 
-async function updateById(id: number, team: CreateTeam) {
+async function updateById(id: number, team: TeamBody) {
   await verifyIdExists(id)
   await verifyAreaExists(team.areaId)
   await verifyConflict(team)

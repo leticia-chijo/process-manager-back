@@ -1,7 +1,7 @@
-import { CreateArea } from "@/types/areas.types"
+import { AreaBody } from "@/types/areas.types"
 import Joi from "joi"
 
-export const areaSchema = Joi.object<CreateArea>({
+export const areaSchema = Joi.object<AreaBody>({
   name: Joi.string().min(3).max(50).required().messages({
     "string.base": "A área deve ser um texto.",
     "string.empty": "A área não pode estar vazio.",

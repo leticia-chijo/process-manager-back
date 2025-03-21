@@ -1,7 +1,7 @@
-import { CreateDoc } from "@/types/docs.types"
+import { DocBody } from "@/types/docs.types"
 import Joi from "joi"
 
-export const docSchema = Joi.object<CreateDoc>({
+export const docSchema = Joi.object<DocBody>({
   name: Joi.string().min(3).max(50).required().messages({
     "string.base": "O nome deve ser um texto.",
     "string.empty": "O nome não pode estar vazio.",

@@ -1,5 +1,5 @@
 import { teamsServices } from "@/services/teams.services"
-import { CreateTeam } from "@/types/teams.types"
+import { TeamBody } from "@/types/teams.types"
 import { isIdValid } from "@/utils/isIdValid"
 import { Request, Response } from "express"
 import httpStatus from "http-status"
@@ -18,14 +18,14 @@ export async function getTeamById(req: Request, res: Response) {
 }
 
 export async function postTeam(req: Request, res: Response) {
-  const body = req.body as CreateTeam
+  const body = req.body as TeamBody
 
   const createdTeam = await teamsServices.create(body)
   res.status(httpStatus.CREATED).send(createdTeam)
 }
 
 export async function putTeamById(req: Request, res: Response) {
-  const body = req.body as CreateTeam
+  const body = req.body as TeamBody
   const teamId = Number(req.params.id)
   isIdValid(teamId)
 

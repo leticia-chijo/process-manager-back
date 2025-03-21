@@ -1,18 +1,18 @@
 import { conflictError, notFoundError } from "@/errors/errors"
 import { areasRepository } from "@/repositories/areas.repository"
-import { CreateArea } from "@/types/areas.types"
+import { AreaBody } from "@/types/areas.types"
 
 async function verifyIdExists(id: number) {
   const idExists = await areasRepository.findById(id)
   if (!idExists) throw notFoundError("Essa área não existe!")
 }
 
-async function verifyConflict(area: CreateArea) {
+async function verifyConflict(area: AreaBody) {
   const nameExists = await areasRepository.findByName(area)
   if (nameExists) throw conflictError("Já existe uma área com esse nome!")
 }
 
-async function create(area: CreateArea) {
+async function create(area: AreaBody) {
   await verifyConflict(area)
   return await areasRepository.create(area)
 }
@@ -26,7 +26,7 @@ async function readById(id: number) {
   return await areasRepository.readById(id)
 }
 
-async function updateById(id: number, area: CreateArea) {
+async function updateById(id: number, area: AreaBody) {
   await verifyIdExists(id)
   await verifyConflict(area)
   return await areasRepository.updateById(id, area)

@@ -1,5 +1,5 @@
 import { areaServices } from "@/services/areas.services"
-import { CreateArea } from "@/types/areas.types"
+import { AreaBody } from "@/types/areas.types"
 import { isIdValid } from "@/utils/isIdValid"
 import { Request, Response } from "express"
 import httpStatus from "http-status"
@@ -18,14 +18,14 @@ export async function getAreaById(req: Request, res: Response) {
 }
 
 export async function postArea(req: Request, res: Response) {
-  const body = req.body as CreateArea
+  const body = req.body as AreaBody
 
   const createdArea = await areaServices.create(body)
   res.status(httpStatus.CREATED).send(createdArea)
 }
 
 export async function putAreaById(req: Request, res: Response) {
-  const body = req.body as CreateArea
+  const body = req.body as AreaBody
   const areaId = Number(req.params.id)
   isIdValid(areaId)
 

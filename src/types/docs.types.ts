@@ -1,3 +1,3 @@
 import { Doc } from "@prisma/client"
 
-export type CreateDoc = Omit<Doc, "id">
+export type DocBody = Omit<Doc, "id">

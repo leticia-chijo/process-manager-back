@@ -1,5 +1,5 @@
 import { toolsServices } from "@/services/tools.services"
-import { CreateTool } from "@/types/tools.types"
+import { ToolBody } from "@/types/tools.types"
 import { isIdValid } from "@/utils/isIdValid"
 import { Request, Response } from "express"
 import httpStatus from "http-status"
@@ -18,14 +18,14 @@ export async function getToolById(req: Request, res: Response) {
 }
 
 export async function postTool(req: Request, res: Response) {
-  const body = req.body as CreateTool
+  const body = req.body as ToolBody
 
   const createdTool = await toolsServices.create(body)
   res.status(httpStatus.CREATED).send(createdTool)
 }
 
 export async function putToolById(req: Request, res: Response) {
-  const body = req.body as CreateTool
+  const body = req.body as ToolBody
   const toolId = Number(req.params.id)
   isIdValid(toolId)
 

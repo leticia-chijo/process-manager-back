@@ -1,7 +1,7 @@
 import prisma from "@/database/database"
-import { CreateDoc } from "@/types/docs.types"
+import { DocBody } from "@/types/docs.types"
 
-async function create(doc: CreateDoc) {
+async function create(doc: DocBody) {
   return prisma.doc.create({
     data: { ...doc }
   })
@@ -17,7 +17,7 @@ async function readById(id: number) {
   })
 }
 
-async function updateById(id: number, doc: CreateDoc) {
+async function updateById(id: number, doc: DocBody) {
   return prisma.doc.update({
     where: { id },
     data: { ...doc }
@@ -30,7 +30,7 @@ async function deleteById(id: number) {
   })
 }
 
-async function findByName(doc: CreateDoc) {
+async function findByName(doc: DocBody) {
   return prisma.doc.findFirst({
     where: { name: doc.name }
   })

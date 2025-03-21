@@ -1,3 +1,3 @@
 import { Team } from "@prisma/client"
 
-export type CreateTeam = Omit<Team, "id">
+export type TeamBody = Omit<Team, "id">

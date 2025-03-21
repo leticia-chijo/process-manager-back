@@ -1,5 +1,5 @@
 import { docsServices } from "@/services/docs.services"
-import { CreateDoc } from "@/types/docs.types"
+import { DocBody } from "@/types/docs.types"
 import { isIdValid } from "@/utils/isIdValid"
 import { Request, Response } from "express"
 import httpStatus from "http-status"
@@ -18,14 +18,14 @@ export async function getDocById(req: Request, res: Response) {
 }
 
 export async function postDoc(req: Request, res: Response) {
-  const body = req.body as CreateDoc
+  const body = req.body as DocBody
 
   const createdDoc = await docsServices.create(body)
   res.status(httpStatus.CREATED).send(createdDoc)
 }
 
 export async function putDocById(req: Request, res: Response) {
-  const body = req.body as CreateDoc
+  const body = req.body as DocBody
   const docId = Number(req.params.id)
   isIdValid(docId)
 

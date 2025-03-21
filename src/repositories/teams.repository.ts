@@ -1,7 +1,7 @@
 import prisma from "@/database/database"
-import { CreateTeam } from "@/types/teams.types"
+import { TeamBody } from "@/types/teams.types"
 
-async function create(team: CreateTeam) {
+async function create(team: TeamBody) {
   return prisma.team.create({
     data: { ...team }
   })
@@ -28,7 +28,7 @@ async function readById(id: number) {
   })
 }
 
-async function updateById(id: number, team: CreateTeam) {
+async function updateById(id: number, team: TeamBody) {
   return prisma.team.update({
     where: { id },
     data: { ...team }
@@ -41,7 +41,7 @@ async function deleteById(id: number) {
   })
 }
 
-async function findByName(team: CreateTeam) {
+async function findByName(team: TeamBody) {
   return prisma.team.findFirst({
     where: { name: team.name }
   })

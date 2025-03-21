@@ -1,7 +1,7 @@
 import prisma from "@/database/database"
-import { CreateArea } from "@/types/areas.types"
+import { AreaBody } from "@/types/areas.types"
 
-async function create(area: CreateArea) {
+async function create(area: AreaBody) {
   return prisma.area.create({
     data: { ...area }
   })
@@ -17,7 +17,7 @@ async function readById(id: number) {
   })
 }
 
-async function updateById(id: number, area: CreateArea) {
+async function updateById(id: number, area: AreaBody) {
   return prisma.area.update({
     where: { id },
     data: { ...area }
@@ -30,7 +30,7 @@ async function deleteById(id: number) {
   })
 }
 
-async function findByName(area: CreateArea) {
+async function findByName(area: AreaBody) {
   return prisma.area.findFirst({
     where: { name: area.name }
   })

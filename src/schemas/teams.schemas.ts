@@ -1,7 +1,7 @@
-import { CreateTeam } from "@/types/teams.types"
+import { TeamBody } from "@/types/teams.types"
 import Joi from "joi"
 
-export const teamSchema = Joi.object<CreateTeam>({
+export const teamSchema = Joi.object<TeamBody>({
   name: Joi.string().min(3).max(50).required().messages({
     "string.base": "O nome deve ser um texto.",
     "string.empty": "O nome não pode estar vazio.",
