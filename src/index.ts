@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, json } from "express"
 import "express-async-errors"
+import cors from "cors"
 import dotenv from "dotenv"
 import errorHandlerMiddleware from "@/middlewares/error.validation"
 import areasRouter from "@/routers/areas.router"
@@ -11,6 +12,7 @@ import processRouter from "@/routers/process.router"
 dotenv.config()
 
 const app: Express = express()
+app.use(cors())
 app.use(json())
 
 app.get("/health", (_req: Request, res: Response): void => {
