@@ -9,6 +9,11 @@ export async function getProcesses(req: Request, res: Response) {
   res.status(httpStatus.CREATED).send(processs)
 }
 
+export async function getProcessesNested(req: Request, res: Response) {
+  const processs = await processServices.readAllNested()
+  res.status(httpStatus.CREATED).send(processs)
+}
+
 export async function getProcessById(req: Request, res: Response) {
   const processId = Number(req.params.id)
   isIdValid(processId)

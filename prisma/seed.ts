@@ -238,7 +238,7 @@ async function main() {
     }
   })
 
-  console.log("✅ Seed concluído!")
+  console.log("✅ Seed finished!")
 }
 
 main()

@@ -1,7 +1,7 @@
 import { conflictError, notFoundError } from "@/errors/errors"
 import { processRepository } from "@/repositories/process.repository"
 import { teamsRepository } from "@/repositories/teams.repository"
-import { ProcessBody, ProcessWithRelations } from "@/types/process.types"
+import { FormattedProcess, ProcessBody, ProcessWithRelations } from "@/types/process.types"
 
 async function verifyIdExists(id: number) {
   const idExists = await processRepository.findById(id)
@@ -45,6 +45,31 @@ async function readAll() {
   return allProcesses.map(formatResponse)
 }
 
+async function readAllNested() {
+  const allProcesses = await processRepository.readAll()
+  const processMap = new Map<number, FormattedProcess>()
+
+  allProcesses.forEach((process) => {
+    const formatted = formatResponse(process)
+    processMap.set(formatted.id, { ...formatted, subProcesses: [] })
+  })
+
+  const rootProcesses: FormattedProcess[] = []
+
+  processMap.forEach((process) => {
+    if (process.parentId !== null) {
+      const parentProcess = processMap.get(process.parentId)
+      if (parentProcess) {
+        parentProcess.subProcesses.push(process)
+      }
+    } else {
+      rootProcesses.push(process)
+    }
+  })
+
+  return rootProcesses
+}
+
 async function readById(id: number) {
   await verifyIdExists(id)
   const process = await processRepository.readById(id)
@@ -68,6 +93,7 @@ async function deleteById(id: number) {
 export const processServices = {
   create,
   readAll,
+  readAllNested,
   readById,
   updateById,
   deleteById

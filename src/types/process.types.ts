@@ -19,4 +19,5 @@ export type ProcessWithRelations = Omit<Process, "teamId"> & {
 export type FormattedProcess = Omit<ProcessWithRelations, "teamId" | "processDocs" | "processTools"> & {
   docs: Doc[]
   tools: (Tool & { purpose: string })[]
+  subProcesses?: FormattedProcess[]
 }
