@@ -1,4 +1,4 @@
-import { Doc, Process, Team, Tool } from "@prisma/client"
+import { Area, Doc, Process, Team, Tool } from "@prisma/client"
 
 export type ProcessTool = {
   id: number
@@ -13,7 +13,7 @@ export type ProcessBody = Omit<Process, "id"> & {
 export type ProcessWithRelations = Omit<Process, "teamId"> & {
   processDocs: { doc: Doc }[]
   processTools: { tool: Tool; purpose: string }[]
-  team: Team
+  team: Omit<Team, "areaId"> & { area: { name: string } }
 }
 
 export type FormattedProcess = Omit<ProcessWithRelations, "teamId" | "processDocs" | "processTools"> & {

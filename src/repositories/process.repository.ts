@@ -7,7 +7,17 @@ const selection = {
   priority: true,
   manual: true,
   parentId: true,
-  team: true,
+  team: {
+    select: {
+      id: true,
+      name: true,
+      area: {
+        select: {
+          name: true
+        }
+      }
+    }
+  },
   processDocs: { select: { doc: true } },
   processTools: { select: { tool: true, purpose: true } }
 }
