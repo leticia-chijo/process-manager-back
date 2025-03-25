@@ -18,27 +18,7 @@ model Team {
   name      String
   areaId    Int
   area      Area      @relation(fields: [areaId], references: [id], onDelete: Cascade)
-  users     User[]
   processes Process[]
-}
-
-model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  password  String
-  photo     String?
-  birthdate DateTime?
-  role      Role?     @relation(fields: [roleId], references: [id])
-  roleId    String?
-  teamId    Int
-  team      Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
-}
-
-model Role {
-  id    String @id @default(uuid())
-  name  String @unique
-  users User[]
 }
 
 model Process {
@@ -46,7 +26,6 @@ model Process {
   title        String
   teamId       Int
   team         Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  manual       Boolean
   priority     String
   parentId     Int?
   parent       Process?       @relation("SubProcesses", fields: [parentId], references: [id])

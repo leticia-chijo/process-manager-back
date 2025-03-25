@@ -1,11 +1,16 @@
 import { PrismaClient } from "@prisma/client"
-import bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
-const hashedPassword = bcrypt.hashSync("senha123", 10)
-
 async function main() {
+  // await prisma.$transaction([
+  //   prisma.process.deleteMany(),
+  //   prisma.doc.deleteMany(),
+  //   prisma.tool.deleteMany(),
+  //   prisma.team.deleteMany(),
+  //   prisma.area.deleteMany()
+  // ])
+
   console.log("🌱 Starting seed...")
 
   // Criar Áreas
@@ -36,56 +41,6 @@ async function main() {
     data: {
       name: "Desenvolvimento",
       areaId: areaTech.id
-    }
-  })
-
-  // Criar Cargos (Roles)
-  const recruiterRole = await prisma.role.create({
-    data: { name: "Recrutador(a)" }
-  })
-
-  const devRole = await prisma.role.create({
-    data: { name: "Engenheiro(a) de Software Júnior" }
-  })
-
-  const hrManagerRole = await prisma.role.create({
-    data: { name: "Gerente de RH" }
-  })
-
-  // Criar Usuários
-  const user1 = await prisma.user.create({
-    data: {
-      name: "Alice Souza",
-      email: "alice@email.com",
-      password: hashedPassword,
-      photo: "https://randomuser.me/api/portraits/women/1.jpg",
-      birthdate: new Date("1992-05-14"),
-      roleId: hrManagerRole.id,
-      teamId: growthTeam.id
-    }
-  })
-
-  const user2 = await prisma.user.create({
-    data: {
-      name: "Bruno Lima",
-      email: "bruno@email.com",
-      password: hashedPassword,
-      photo: "https://randomuser.me/api/portraits/men/2.jpg",
-      birthdate: new Date("1990-08-22"),
-      roleId: recruiterRole.id,
-      teamId: recruitmentTeam.id
-    }
-  })
-
-  const user3 = await prisma.user.create({
-    data: {
-      name: "Carla Mendes",
-      email: "carla@email.com",
-      password: hashedPassword,
-      photo: "https://randomuser.me/api/portraits/women/3.jpg",
-      birthdate: new Date("1985-12-10"),
-      roleId: devRole.id,
-      teamId: devTeam.id
     }
   })
 
@@ -139,12 +94,11 @@ async function main() {
     }
   })
 
-  // Criar Processos Principais
+  // Criar Processos Recrutamento
   const recruitmentProcess = await prisma.process.create({
     data: {
       title: "Recrutamento e Seleção",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "HIGH",
       processDocs: {
         create: { doc: { connect: { id: doc1.id } } }
@@ -155,12 +109,10 @@ async function main() {
     }
   })
 
-  // Criar Subprocessos para Recrutamento
   const profileDefinition = await prisma.process.create({
     data: {
       title: "Definição de perfil da vaga",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "MEDIUM",
       parentId: recruitmentProcess.id
     }
@@ -170,7 +122,6 @@ async function main() {
     data: {
       title: "Divulgação da vaga",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "HIGH",
       parentId: recruitmentProcess.id
     }
@@ -180,7 +131,6 @@ async function main() {
     data: {
       title: "Criar vaga no LinkedIn",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "MEDIUM",
       parentId: jobPosting.id,
       processTools: {
@@ -193,7 +143,6 @@ async function main() {
     data: {
       title: "Criar vaga na Gupy",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "LOW",
       parentId: jobPosting.id,
       processTools: {
@@ -206,9 +155,17 @@ async function main() {
     data: {
       title: "Triagem de currículos",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "HIGH",
       parentId: recruitmentProcess.id
+    }
+  })
+
+  const resumeDownload = await prisma.process.create({
+    data: {
+      title: "Baixar Arquivos",
+      teamId: recruitmentTeam.id,
+      priority: "MEDIUM",
+      parentId: resumeScreening.id
     }
   })
 
@@ -216,7 +173,6 @@ async function main() {
     data: {
       title: "Entrevistas",
       teamId: recruitmentTeam.id,
-      manual: false,
       priority: "HIGH",
       parentId: recruitmentProcess.id,
       processDocs: {
@@ -232,9 +188,89 @@ async function main() {
     data: {
       title: "Oferta de contratação",
       teamId: recruitmentTeam.id,
-      manual: true,
       priority: "HIGH",
       parentId: recruitmentProcess.id
+    }
+  })
+
+  // Criar Processos desenvolvimento
+  const devProcess = await prisma.process.create({
+    data: {
+      title: "Desenvolvimento de Software",
+      teamId: devTeam.id,
+      priority: "HIGH"
+    }
+  })
+
+  const frontendDevelopment = await prisma.process.create({
+    data: {
+      title: "Desenvolvimento Frontend",
+      teamId: devTeam.id,
+      priority: "HIGH",
+      parentId: devProcess.id
+    }
+  })
+
+  const backendDevelopment = await prisma.process.create({
+    data: {
+      title: "Desenvolvimento Backend",
+      teamId: devTeam.id,
+      priority: "HIGH",
+      parentId: devProcess.id
+    }
+  })
+
+  const testing = await prisma.process.create({
+    data: {
+      title: "Testes e QA",
+      teamId: devTeam.id,
+      priority: "MEDIUM",
+      parentId: devProcess.id
+    }
+  })
+
+  const frontendArchitecture = await prisma.process.create({
+    data: {
+      title: "Arquitetura Frontend",
+      teamId: devTeam.id,
+      priority: "MEDIUM",
+      parentId: frontendDevelopment.id
+    }
+  })
+
+  const backendArchitecture = await prisma.process.create({
+    data: {
+      title: "Arquitetura Backend",
+      teamId: devTeam.id,
+      priority: "MEDIUM",
+      parentId: backendDevelopment.id
+    }
+  })
+
+  const componentLibrary = await prisma.process.create({
+    data: {
+      title: "Manutenção da Biblioteca de Componentes",
+      teamId: devTeam.id,
+      priority: "LOW",
+      parentId: frontendArchitecture.id
+    }
+  })
+
+  const frontendRefactor = await prisma.process.create({
+    data: {
+      title: "Refatoração de Código Frontend",
+      teamId: devTeam.id,
+      priority: "LOW",
+      parentId: frontendArchitecture.id
+    }
+  })
+
+  const codeReview = await prisma.process.create({
+    data: {
+      title: "Revisão de Código",
+      teamId: devTeam.id,
+      priority: "HIGH",
+      parentId: frontendRefactor.id
     }
   })
 

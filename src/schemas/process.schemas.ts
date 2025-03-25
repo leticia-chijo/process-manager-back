@@ -23,10 +23,6 @@ export const processSchema = Joi.object<ProcessBody>({
     "number.base": "O ID do time deve ser um número.",
     "number.positive": "O ID do time deve ser positivo."
   }),
-  manual: Joi.boolean().required().messages({
-    "any.required": "O campo 'manual' é obrigatório.",
-    "boolean.base": "O campo 'manual' deve ser um booleano."
-  }),
   priority: Joi.string().valid("LOW", "MEDIUM", "HIGH").required().messages({
     "any.required": "A prioridade é obrigatória.",
     "any.only": "A prioridade deve ser 'LOW', 'MEDIUM' ou 'HIGH'."

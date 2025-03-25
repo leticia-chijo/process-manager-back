@@ -5,7 +5,6 @@ const selection = {
   id: true,
   title: true,
   priority: true,
-  manual: true,
   parentId: true,
   team: {
     select: {
@@ -23,8 +22,8 @@ const selection = {
 }
 
 async function create(process: ProcessBody) {
-  const { title, teamId, manual, priority, parentId, docs, tools } = process
-  const data = { title, teamId, manual, priority, parentId }
+  const { title, teamId, priority, parentId, docs, tools } = process
+  const data = { title, teamId, priority, parentId }
 
   return await prisma.process.create({
     data: {
@@ -55,8 +54,8 @@ async function readById(id: number) {
 }
 
 async function updateById(id: number, process: ProcessBody) {
-  const { title, teamId, manual, priority, parentId, docs, tools } = process
-  const data = { title, teamId, manual, priority, parentId }
+  const { title, teamId, priority, parentId, docs, tools } = process
+  const data = { title, teamId, priority, parentId }
 
   return await prisma.process.update({
     where: { id },
