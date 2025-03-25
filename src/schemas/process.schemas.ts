@@ -14,9 +14,9 @@ const processToolSchema = Joi.object<ProcessTool>({
 })
 
 export const processSchema = Joi.object<ProcessBody>({
-  title: Joi.string().required().messages({
-    "any.required": "O título do processo é obrigatório.",
-    "string.empty": "O título do processo não pode estar vazio."
+  name: Joi.string().required().messages({
+    "any.required": "O nome do processo é obrigatório.",
+    "string.empty": "O nome do processo não pode estar vazio."
   }),
   teamId: Joi.number().integer().positive().required().messages({
     "any.required": "É obrigatório escolher um time. ",

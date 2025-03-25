@@ -9,8 +9,8 @@ async function verifyIdExists(id: number) {
 }
 
 async function verifyConflict(process: ProcessBody, id: number = -1) {
-  const titleExists = await processRepository.findByTitle(process)
-  if (titleExists && (id !== titleExists.id || id === -1)) {
+  const nameExists = await processRepository.findByName(process)
+  if (nameExists && (id !== nameExists.id || id === -1)) {
     throw conflictError("Já existe um processo com esse título!")
   }
 }

@@ -3,7 +3,7 @@ import { ProcessBody } from "@/types/process.types"
 
 const selection = {
   id: true,
-  title: true,
+  name: true,
   priority: true,
   parentId: true,
   team: {
@@ -22,8 +22,8 @@ const selection = {
 }
 
 async function create(process: ProcessBody) {
-  const { title, teamId, priority, parentId, docs, tools } = process
-  const data = { title, teamId, priority, parentId }
+  const { name, teamId, priority, parentId, docs, tools } = process
+  const data = { name, teamId, priority, parentId }
 
   return await prisma.process.create({
     data: {
@@ -54,8 +54,8 @@ async function readById(id: number) {
 }
 
 async function updateById(id: number, process: ProcessBody) {
-  const { title, teamId, priority, parentId, docs, tools } = process
-  const data = { title, teamId, priority, parentId }
+  const { name, teamId, priority, parentId, docs, tools } = process
+  const data = { name, teamId, priority, parentId }
 
   return await prisma.process.update({
     where: { id },
@@ -83,9 +83,9 @@ async function deleteById(id: number) {
   })
 }
 
-async function findByTitle(process: ProcessBody) {
+async function findByName(process: ProcessBody) {
   return prisma.process.findFirst({
-    where: { title: process.title }
+    where: { name: process.name }
   })
 }
 
@@ -101,6 +101,6 @@ export const processRepository = {
   readById,
   updateById,
   deleteById,
-  findByTitle,
+  findByName,
   findById
 }

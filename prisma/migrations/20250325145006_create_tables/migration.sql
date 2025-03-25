@@ -18,7 +18,7 @@ CREATE TABLE "Team" (
 -- CreateTable
 CREATE TABLE "Process" (
     "id" SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "teamId" INTEGER NOT NULL,
     "priority" TEXT NOT NULL,
     "parentId" INTEGER,

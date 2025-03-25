@@ -97,7 +97,7 @@ async function main() {
   // Criar Processos Recrutamento
   const recruitmentProcess = await prisma.process.create({
     data: {
-      title: "Recrutamento e Seleção",
+      name: "Recrutamento e Seleção",
       teamId: recruitmentTeam.id,
       priority: "HIGH",
       processDocs: {
@@ -111,7 +111,7 @@ async function main() {
 
   const profileDefinition = await prisma.process.create({
     data: {
-      title: "Definição de perfil da vaga",
+      name: "Definição de perfil da vaga",
       teamId: recruitmentTeam.id,
       priority: "MEDIUM",
       parentId: recruitmentProcess.id
@@ -120,7 +120,7 @@ async function main() {
 
   const jobPosting = await prisma.process.create({
     data: {
-      title: "Divulgação da vaga",
+      name: "Divulgação da vaga",
       teamId: recruitmentTeam.id,
       priority: "HIGH",
       parentId: recruitmentProcess.id
@@ -129,7 +129,7 @@ async function main() {
 
   const linkedinPosition = await prisma.process.create({
     data: {
-      title: "Criar vaga no LinkedIn",
+      name: "Criar vaga no LinkedIn",
       teamId: recruitmentTeam.id,
       priority: "MEDIUM",
       parentId: jobPosting.id,
@@ -141,7 +141,7 @@ async function main() {
 
   const gupyPosition = await prisma.process.create({
     data: {
-      title: "Criar vaga na Gupy",
+      name: "Criar vaga na Gupy",
       teamId: recruitmentTeam.id,
       priority: "LOW",
       parentId: jobPosting.id,
@@ -153,7 +153,7 @@ async function main() {
 
   const resumeScreening = await prisma.process.create({
     data: {
-      title: "Triagem de currículos",
+      name: "Triagem de currículos",
       teamId: recruitmentTeam.id,
       priority: "HIGH",
       parentId: recruitmentProcess.id
@@ -162,7 +162,7 @@ async function main() {
 
   const resumeDownload = await prisma.process.create({
     data: {
-      title: "Baixar Arquivos",
+      name: "Baixar Arquivos",
       teamId: recruitmentTeam.id,
       priority: "MEDIUM",
       parentId: resumeScreening.id
@@ -171,7 +171,7 @@ async function main() {
 
   const interviews = await prisma.process.create({
     data: {
-      title: "Entrevistas",
+      name: "Entrevistas",
       teamId: recruitmentTeam.id,
       priority: "HIGH",
       parentId: recruitmentProcess.id,
@@ -186,7 +186,7 @@ async function main() {
 
   const jobOffer = await prisma.process.create({
     data: {
-      title: "Oferta de contratação",
+      name: "Oferta de contratação",
       teamId: recruitmentTeam.id,
       priority: "HIGH",
       parentId: recruitmentProcess.id
@@ -196,7 +196,7 @@ async function main() {
   // Criar Processos desenvolvimento
   const devProcess = await prisma.process.create({
     data: {
-      title: "Desenvolvimento de Software",
+      name: "Desenvolvimento de Software",
       teamId: devTeam.id,
       priority: "HIGH"
     }
@@ -204,7 +204,7 @@ async function main() {
 
   const frontendDevelopment = await prisma.process.create({
     data: {
-      title: "Desenvolvimento Frontend",
+      name: "Desenvolvimento Frontend",
       teamId: devTeam.id,
       priority: "HIGH",
       parentId: devProcess.id
@@ -213,7 +213,7 @@ async function main() {
 
   const backendDevelopment = await prisma.process.create({
     data: {
-      title: "Desenvolvimento Backend",
+      name: "Desenvolvimento Backend",
       teamId: devTeam.id,
       priority: "HIGH",
       parentId: devProcess.id
@@ -222,7 +222,7 @@ async function main() {
 
   const testing = await prisma.process.create({
     data: {
-      title: "Testes e QA",
+      name: "Testes e QA",
       teamId: devTeam.id,
       priority: "MEDIUM",
       parentId: devProcess.id
@@ -231,7 +231,7 @@ async function main() {
 
   const frontendArchitecture = await prisma.process.create({
     data: {
-      title: "Arquitetura Frontend",
+      name: "Arquitetura Frontend",
       teamId: devTeam.id,
       priority: "MEDIUM",
       parentId: frontendDevelopment.id
@@ -240,7 +240,7 @@ async function main() {
 
   const backendArchitecture = await prisma.process.create({
     data: {
-      title: "Arquitetura Backend",
+      name: "Arquitetura Backend",
       teamId: devTeam.id,
       priority: "MEDIUM",
       parentId: backendDevelopment.id
@@ -249,7 +249,7 @@ async function main() {
 
   const componentLibrary = await prisma.process.create({
     data: {
-      title: "Manutenção da Biblioteca de Componentes",
+      name: "Manutenção da Biblioteca de Componentes",
       teamId: devTeam.id,
       priority: "LOW",
       parentId: frontendArchitecture.id
@@ -258,7 +258,7 @@ async function main() {
 
   const frontendRefactor = await prisma.process.create({
     data: {
-      title: "Refatoração de Código Frontend",
+      name: "Refatoração de Código Frontend",
       teamId: devTeam.id,
       priority: "LOW",
       parentId: frontendArchitecture.id
@@ -267,7 +267,7 @@ async function main() {
 
   const codeReview = await prisma.process.create({
     data: {
-      title: "Revisão de Código",
+      name: "Revisão de Código",
       teamId: devTeam.id,
       priority: "HIGH",
       parentId: frontendRefactor.id
