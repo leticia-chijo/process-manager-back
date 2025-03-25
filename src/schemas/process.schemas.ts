@@ -8,18 +8,18 @@ const processToolSchema = Joi.object<ProcessTool>({
     "any.required": "O ID da ferramenta é obrigatório."
   }),
   purpose: Joi.string().required().messages({
-    "string.base": "O propósito deve ser um texto.",
-    "any.required": "O propósito da ferramenta é obrigatório."
+    "string.base": "O propósito de cada ferramenta deve ser um texto.",
+    "any.required": "O propósito de cada ferramenta é obrigatório."
   })
 })
 
 export const processSchema = Joi.object<ProcessBody>({
   title: Joi.string().required().messages({
-    "any.required": "O título é obrigatório.",
-    "string.empty": "O título não pode estar vazio."
+    "any.required": "O título do processo é obrigatório.",
+    "string.empty": "O título do processo não pode estar vazio."
   }),
   teamId: Joi.number().integer().positive().required().messages({
-    "any.required": "O ID do time é obrigatório.",
+    "any.required": "É obrigatório escolher um time. ",
     "number.base": "O ID do time deve ser um número.",
     "number.positive": "O ID do time deve ser positivo."
   }),
